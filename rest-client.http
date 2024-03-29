@@ -1,0 +1,16 @@
+GET http://localhost:3049
+
+### Send Fetch Songs Request
+GET http://localhost:3049/songs
+
+### Find Songs Request
+GET http://localhost:3049/songs/1
+
+### Create Song Request
+POST http://localhost:3049/songs
+
+### Update Song Request
+PUT http://localhost:3049/songs/1
+
+### Delete Song Request
+DELETE http://localhost:3049/songs/1
