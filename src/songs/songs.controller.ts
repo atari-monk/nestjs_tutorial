@@ -1,6 +1,17 @@
-import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
-import { SongsService } from './songs.service';
-import { CreateSongDTO } from './dto/create-song-dto';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+} from '@nestjs/common'
+import { SongsService } from './songs.service'
+import { CreateSongDTO } from './dto/create-song-dto'
 
 @Controller('songs')
 export class SongsController {
@@ -8,26 +19,42 @@ export class SongsController {
 
   @Post()
   create(@Body() createSongDTO: CreateSongDTO) {
-    return this.songsService.create(createSongDTO);
+    return this.songsService.create(createSongDTO)
   }
 
   @Get()
   findAll() {
-    return this.songsService.findAll();
+    try {
+      return this.songsService.findAll()
+    } catch (e) {
+      //console.log('I am in the catch block', e)
+      throw new HttpException(
+        'server error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        { cause: e },
+      )
+    }
   }
 
   @Get(':id')
-  findOne() {
-    return 'Fetch one song based on id';
+  findOne(
+    // @Param('id', ParseIntPipe) //option 1
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
+  ) {
+    return `Fetch one song based on id ${typeof id}`
   }
 
   @Put(':id')
   update() {
-    return 'Update song based on id';
+    return 'Update song based on id'
   }
-  
+
   @Delete(':id')
   delete() {
-    return 'Delete song based on id';
+    return 'Delete song based on id'
   }
 }
