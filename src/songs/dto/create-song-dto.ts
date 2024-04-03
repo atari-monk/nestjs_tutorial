@@ -1,21 +1,29 @@
-import { ArrayMinSize, ArrayUnique, IsArray, IsDateString, IsMilitaryTime, IsNotEmpty, IsString } from "class-validator";
+import {
+  ArrayMinSize,
+  ArrayUnique,
+  IsArray,
+  IsDateString,
+  IsMilitaryTime,
+  IsNotEmpty,
+  IsString,
+} from 'class-validator'
 
 export class CreateSongDTO {
   @IsString()
   @IsNotEmpty()
-  readonly title: string;
+  readonly title: string
 
   @IsArray()
   @ArrayMinSize(1)
   @ArrayUnique()
   @IsString({ each: true })
-  readonly artists: string[];
+  readonly artists: string[]
 
   @IsNotEmpty()
   @IsDateString()
-  readonly releasedDate: Date;
+  readonly releasedDate: Date
 
   @IsMilitaryTime()
   @IsNotEmpty()
-  readonly duration: Date;
+  readonly duration: Date
 }

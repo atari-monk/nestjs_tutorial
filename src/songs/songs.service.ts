@@ -10,7 +10,7 @@ export class SongsService {
   }
 
   findAll() {
-    throw new Error('Error in Db while fetching record')
+    //throw new Error('Error in Db while fetching record')
     return this.songs
   }
 }
